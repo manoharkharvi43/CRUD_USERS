@@ -7,7 +7,6 @@ import DeleteModal from './DeleteModal';
 ReactDOM.render(
   <>
 <App/>
-
   </>,
   document.getElementById('root')
 );

@@ -27,28 +27,10 @@ function Createpost(props) {
             setinput({
 				editedValue:true
 			})
-
 		}
 	}, [edit]);
-	// const submitdata = (input) => {
-	// 	return (
-	// 		fetch("http://localhost:4000/user", {
-	// 			method: "POST",
-	// 			headers: { "Content-Type": "application/json" },
-	// 			mode: "cors",
-	// 			body: JSON.stringify({
-	// 				name: input.name,
-	// 				email: input.email,
-	// 				phoneno: input.phoneno,
-	// 				position: input.position,
-	// 			}),
-	// 		})
-	// 			.then((res) => res.json())
-	// 			.then((data) => console.log(data))
-	// 			.catch((err) => {})
-				
-	// 	);
-	// };
+
+	
     
 	const submitdata = (event) => {
 		event.preventDefault();

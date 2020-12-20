@@ -3,6 +3,7 @@ import { createContext } from "react";
 import "./App.css";
 import Createpost from "./Createpost";
 import axios from "axios";
+import SendEmail from './SendEmail'
 // import { useDispatch } from "react-redux";
 // import editUsers from '../src/Redux/Actions/Action'
 
@@ -16,6 +17,7 @@ function App() {
 		email: "",
 		phoneno: "",
 		position: "",
+		editedValue:true
 	});
  
 
@@ -62,7 +64,6 @@ function App() {
 			position: val.position,
 			editedValue:true
 		});
-		console.log(val)
 	};
 
 	return (
@@ -121,6 +122,48 @@ function App() {
 						</div>
 					</div>
 					{/* modal */}
+
+					{/* email */}
+					<div
+						className="modal fade"
+						id="staticBackdropEmail"
+						data-backdrop="static"
+						data-keyboard="false"
+						tabIndex="-1"
+						aria-labelledby="staticBackdropLabel"
+						aria-hidden="true"
+					>
+						<div className="modal-dialog">
+							<div className="modal-content">
+								<div className="modal-header">
+									<h5 className="modal-title" id="staticBackdropLabel">
+										Send Email
+									</h5>
+									<button
+										type="button"
+										className="close"
+										data-dismiss="modal"
+										aria-label="Close"
+									>
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div className="modal-body">
+								<SendEmail email={edit.email}  />
+								</div>
+								<div className="modal-footer">
+									<button
+										type="button"
+										className="btn btn-secondary"
+										data-dismiss="modal"
+									>
+										Close
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					{/* email */}
 					<div className="container-fluid">
 						<table className="table table-striped">
 							<thead>
@@ -147,11 +190,11 @@ function App() {
 												type="button"
 												className="btn btn-primary"
 												data-toggle="modal"
-												data-target="#staticBackdrop"
+												data-target="#staticBackdropEmail"
 												id="btn"
 												onClick={() => editusers(val)}
 											>
-												Edit
+												Send Email
 											</button>
 											<button
 												type="button"
