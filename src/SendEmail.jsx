@@ -1,32 +1,41 @@
 import React, { useEffect, useState } from "react";
 import Createpost from "./Createpost";
 import transporter from "../src/Mailconfig";
-import {FiLoader} from 'react-icons/fi'
+import { FiLoader } from "react-icons/fi";
+import ModalScreen from "./ModalScreen";
 function SendEmail(props) {
 	const [emailValue, setEmailValue] = useState({
 		contents: "",
 		headings: "",
 		email: "",
 	});
-	const [loading , setloading] = useState(false)
+	const [loading, setloading] = useState(false);
 
 	useEffect(() => {
 		if (props.email) setEmailValue({ ...emailValue, email: props.email });
 	}, [props.email]);
 
-const resetAll = () =>{
-	setEmailValue({
-		contents: "",
-		headings: "",
-		email: "",
-	})
-} 
-	
+	const resetAll = () => {
+		setEmailValue({
+			contents: "",
+			headings: "",
+			email: "",
+		});
+	};
+
+	const setData = (e) => {
+		const { name, value } = e.target;
+		setEmailValue({
+			...emailValue,
+			[name]: value,
+		});
+	};
 
 	const sendemail = (e) => {
-		setloading(true)
+		setloading(true);
 		e.preventDefault();
-		fetch("http://localhost:4000/emailservice", {
+		if (emailValue)
+			fetch("http://localhost:4000/emailservice", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				mode: "cors",
@@ -37,18 +46,19 @@ const resetAll = () =>{
 				}),
 			})
 				.then((res) => res.json())
-				.then((data) => console.log(data) , setloading(false) )
-				.catch((err) => console.log('error occured' , err),setloading(false))
-				resetAll()
+				.then((data) => console.log(data), setloading(false))
+				.catch((err) => console.log("error occured", err), setloading(false));
+		resetAll();
+
+		console.log(loading);
 	};
 
 	return (
 		<div>
 			<div className="container-fluid">
-				 
 				<div className="row p4">
 					<div className="col">
-						<form onSubmit={(e)=>sendemail(e)}>
+						<form onSubmit={(e) => sendemail(e)}>
 							<div className="form-group">
 								<label for="exampleFormControlInput1">Email address</label>
 								<input
@@ -71,9 +81,10 @@ const resetAll = () =>{
 									id="formGroupExampleInput"
 									placeholder="Heading"
 									value={emailValue.headings}
-									onChange={(e) =>
-										setEmailValue({ ...emailValue, headings: e.target.value })
-									}
+									// onChange={(e) =>
+									// 	setEmailValue({ ...emailValue, headings: e.target.value })
+									// }
+									onChange={setData}
 									name="headings"
 								></input>
 							</div>
@@ -86,9 +97,10 @@ const resetAll = () =>{
 									id="exampleFormControlTextarea1"
 									rows="3"
 									value={emailValue.contents}
-									onChange={(e) =>
-										setEmailValue({ ...emailValue, contents: e.target.value })
-									}
+									// onChange={(e) =>
+									// 	setEmailValue({ ...emailValue, contents: e.target.value })
+									// }
+									onChange={setData}
 									name="contents"
 								></textarea>
 							</div>
@@ -98,10 +110,12 @@ const resetAll = () =>{
 								style={{ marginTop: "1%" }}
 								type="submit"
 							>
-								{ loading ? 	<FiLoader color='black' size={25} /> :'Submit' }
+								{loading ? <FiLoader color="black" size={25} /> : "Submit"}
 							</button>
-						
+
+
 						</form>
+						 <ModalScreen showModal={true} />
 					</div>
 				</div>
 			</div>
