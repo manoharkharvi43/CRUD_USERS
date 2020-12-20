@@ -1,9 +1,12 @@
 const mongoose = require('mongoose')
 const express = require ('express')
-
 const User = require('../scheme/scheme')
-
+const emailer = require('nodemailer')
 const route = express.Router()
+
+
+
+
 
 //getting the whole data from db
 route.get('/user',(req,res)=>{
@@ -75,6 +78,39 @@ route.post( '/updateUser/:id' , async(req,res)=>{
     catch(err){
         res.send(err)
     }
+})
+
+//email service
+route.post( '/emailservice' , async(req,res) =>{
+const EMAIL='mkharvi570@gmail.com'
+const PASSWORD='manuGMAIL4322@'
+
+//creating transporter
+let transporter = emailer.createTransport({
+    service:'gmail',
+    auth:{
+        user:EMAIL,
+        pass:PASSWORD
+    }
+})
+
+//data
+const data = req.body
+const sendTo = {
+    from:EMAIL,
+    to:data.email,
+    subject:data.headings,
+    text:data.contents,
+}
+
+//sending mail
+transporter.sendMail(sendTo , function(err,data){
+    if(err)
+    console.log('error' ,err)
+    else
+    console.log('data',data)
+})
+
 })
 
 

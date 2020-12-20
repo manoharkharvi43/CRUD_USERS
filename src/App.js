@@ -36,7 +36,7 @@ function App() {
 			})
 				.then((res) => res.json())
 				.then((data) => console.log(data))
-				.catch((err) => {})
+				.catch((err) => console.log('error occured' , err))
 		);
 	};
  
