@@ -48,7 +48,7 @@ route.post('/user',async(req,res) =>{
 })
 
 
-//deletin from  the db
+//deleting from  the db
 route.delete('/user/:id', async(req,res) =>{
     try {
         const del_item =  await User.findByIdAndDelete(req.params.id)
@@ -59,5 +59,23 @@ route.delete('/user/:id', async(req,res) =>{
         res.send(err)
     }
 })
+
+//updating users
+route.post( '/updateUser/:id' , async(req,res)=>{
+    const updateUser = await User.findByIdAndUpdate(req.params.id,{
+        name :req.body.name,
+        email :req.body.email,
+        phoneno :req.body.phoneno,
+        position :req.body.position
+       })
+    try{
+       User.save()
+       res.send(updateUser)
+    } 
+    catch(err){
+        res.send(err)
+    }
+})
+
 
 module.exports=route

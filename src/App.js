@@ -35,7 +35,6 @@ function App() {
 				.then((res) => res.json())
 				.then((data) => console.log(data))
 				.catch((err) => {})
-				
 		);
 	};
  
@@ -61,6 +60,7 @@ function App() {
 			email: val.email,
 			phoneno: val.phoneno,
 			position: val.position,
+			editedValue:true
 		});
 		console.log(val)
 	};

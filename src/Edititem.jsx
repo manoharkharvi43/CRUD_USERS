@@ -14,7 +14,7 @@ function Edititem() {
         </button>
       </div>
       <div className="modal-body">
-      <Createpost   />
+      <Createpost    />
       </div>
       <div className="modal-footer">
      

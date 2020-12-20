@@ -1,29 +1,73 @@
 import React, { useState } from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
-import {edited_values} from './App'
+import { edited_values } from "./App";
 
 function Createpost(props) {
-
-  const edit = useContext(edited_values)
-  const {  passData ,editData} = props
+	const edit = useContext(edited_values);
+	const { passData, editData } = props;
 	const [input, setinput] = useState({
 		name: "",
 		email: "",
 		phoneno: "",
 		position: "",
+		editedValue:false
   });
-  useEffect(()=>{
-  if(edit)
-  setinput(edit)
-  },[edit])
- 
+//   const [editedData, seteditedData] = useState({
+// 		name: "",
+// 		email: "",
+// 		phoneno: "",
+// 		position: "",
+//   });
   
-  
-   const submitdata = (event) =>{
-    event.preventDefault();
-     passData(input)
-   }
+	useEffect(() => {
+		if(edit)
+		{
+			setinput(edit);	
+            setinput({
+				editedValue:true
+			})
+
+		}
+	}, [edit]);
+	// const submitdata = (input) => {
+	// 	return (
+	// 		fetch("http://localhost:4000/user", {
+	// 			method: "POST",
+	// 			headers: { "Content-Type": "application/json" },
+	// 			mode: "cors",
+	// 			body: JSON.stringify({
+	// 				name: input.name,
+	// 				email: input.email,
+	// 				phoneno: input.phoneno,
+	// 				position: input.position,
+	// 			}),
+	// 		})
+	// 			.then((res) => res.json())
+	// 			.then((data) => console.log(data))
+	// 			.catch((err) => {})
+				
+	// 	);
+	// };
+    
+	const submitdata = (event) => {
+		event.preventDefault();
+	// 	if (edit) {
+	// 		fetch(`http://localhost:4000/updateUser/${edit._id}`, {
+	// 			method: "POST",
+	// 			headers: { "Content-Type": "application/json" },
+	// 			mode: "cors",
+	// 			body: JSON.stringify({
+	// 				name: input.name,
+	// 				email: input.email,
+	// 				phoneno: input.phoneno,
+	// 				position: input.position,
+	// 			}),
+    //   });
+    //   setinput('')
+    // } 
+	passData(input)
+	};
 	return (
 		<>
 			<div className="container-fluid">
