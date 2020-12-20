@@ -34,21 +34,8 @@ function Createpost(props) {
     
 	const submitdata = (event) => {
 		event.preventDefault();
-	// 	if (edit) {
-	// 		fetch(`http://localhost:4000/updateUser/${edit._id}`, {
-	// 			method: "POST",
-	// 			headers: { "Content-Type": "application/json" },
-	// 			mode: "cors",
-	// 			body: JSON.stringify({
-	// 				name: input.name,
-	// 				email: input.email,
-	// 				phoneno: input.phoneno,
-	// 				position: input.position,
-	// 			}),
-    //   });
-    //   setinput('')
-    // } 
-	passData(input)
+          
+	    passData(input)
 	};
 	return (
 		<>

@@ -31,8 +31,7 @@ function SendEmail(props) {
 		});
 	};
 
-	const sendemail = (e) => {
-		setloading(true);
+	const sendemail = e => {
 		e.preventDefault();
 		if (emailValue)
 			fetch("http://localhost:4000/emailservice", {
@@ -46,11 +45,9 @@ function SendEmail(props) {
 				}),
 			})
 				.then((res) => res.json())
-				.then((data) => console.log(data), setloading(false))
-				.catch((err) => console.log("error occured", err), setloading(false));
+				.then((data) => console.log(data))
+				.catch((err) => console.log("error occured", err));
 		resetAll();
-
-		console.log(loading);
 	};
 
 	return (
@@ -58,7 +55,7 @@ function SendEmail(props) {
 			<div className="container-fluid">
 				<div className="row p4">
 					<div className="col">
-						<form onSubmit={(e) => sendemail(e)}>
+						<form onSubmit={sendemail}>
 							<div className="form-group">
 								<label for="exampleFormControlInput1">Email address</label>
 								<input
@@ -115,7 +112,7 @@ function SendEmail(props) {
 
 
 						</form>
-						 <ModalScreen showModal={true} />
+
 					</div>
 				</div>
 			</div>

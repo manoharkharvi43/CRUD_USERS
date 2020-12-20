@@ -17,11 +17,7 @@ const allscheme = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	editedValue: {
-		type: Number,
-        required: true,
-        default:false
-	},
+
 });
 
 module.exports = mongoose.model("scheme", allscheme);
