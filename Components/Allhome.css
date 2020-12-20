@@ -1,0 +1,14 @@
+.nav-item{
+    padding: 5%;
+    list-style-type: none;
+   text-decoration: none;
+
+}
+
+#navbars{
+    margin-right: 5%;
+}
+.navbar__link--active {
+    border-bottom: 3px solid #29b6f6;
+    transition: border-bottom .5s ease-in-out;
+  }
