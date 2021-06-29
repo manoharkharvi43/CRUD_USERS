@@ -15,6 +15,18 @@ function Createpost(props) {
 		editedValue:false
   });
 
+
+  useEffect(() =>{
+if(loader){
+	setinput({
+		name: "",
+		email: "",
+		phoneno: "",
+		position: "",	
+	})
+	
+}
+  },[loader])
   
 	useEffect(() => {
 		if(edit)

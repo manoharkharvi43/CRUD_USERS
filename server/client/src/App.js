@@ -7,6 +7,7 @@ import SendEmail from "./SendEmail";
 import { useSnackbar } from "notistack";
 import MuiAlert from '@material-ui/lab/Alert';
 import Snackbar from '@material-ui/core/Snackbar';
+import { CircularProgress } from "@material-ui/core";
 
 
 
@@ -16,14 +17,14 @@ function Alert(props) {
 }
 export const edited_values = createContext();
 function App() {
- 
-
-
   const [alldata, setalldata] = useState([]);
   const [passvalue, setpassvalue] = useState(false);
   const [ failureMessage , setFailureMessage] = useState(false)
   const [ successMessage , setSuccessMessage] = useState(false)
+  const[refresh , setRefresh] = useState(false)
   const[loader , setLoader] = useState(false)
+  const[deleteLoader , setDeleteLoader] = useState(false)
+  const [ currentClickedIndex , setCurrentClickedIndex] = useState('')
   const [edit, setedit] = useState({
     name: "",
     email: "",
@@ -49,6 +50,7 @@ function App() {
         .then((res) => res.json())
         .then((data) => {   setSuccessMessage(true)
           setLoader(false)
+          setRefresh(!refresh)
       })
         .catch((err) => {console.log("error occured", err)
         setLoader(false)
@@ -62,18 +64,28 @@ function App() {
   
   };
 
+  const refreshData = () =>{
+    fetch("http://localhost:4000/user")
+    .then((res) => res.json())
+    .then((data) => setalldata(data))
+    .catch((errr) => console.log(errr));
+  }
   useEffect(() => {
     fetch("http://localhost:4000/user")
       .then((res) => res.json())
       .then((data) => setalldata(data))
       .catch((errr) => console.log(errr));
-  }, []);
+  }, [refresh]);
 
   function deleteitem(id) {
+    setDeleteLoader(true)
     axios
       .delete(`http://localhost:4000/user/${id}`)
-      .then((res) => console.log(res))
-      .then((err) => console.log(err));
+      .then((res) => {console.log(res)
+        setDeleteLoader(false) 
+        refreshData()})
+      .then((err) => {console.log(err)
+        setDeleteLoader(false)});
   }
 
   const editusers = (val) => {
@@ -236,9 +248,13 @@ function App() {
                       <button
                         type="button"
                         className="btn btn-outline-danger"
-                        onClick={() => deleteitem(val._id)}
+                        onClick={() => {deleteitem(val._id)
+                          setCurrentClickedIndex(val._id)}}
+                        disabled={deleteLoader ? true : false}
+
                       >
-                        Delete
+                        
+                        {deleteLoader && currentClickedIndex===val._id?  <CircularProgress size={20} /> : 'Delete'}
                       </button>
                     </tr>
                   </tbody>
