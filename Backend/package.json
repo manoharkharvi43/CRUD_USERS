@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "App.js",
+
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon App.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install npm && run build"
+    "heroku-postbuild": "cd Backend && npm install --only=dev && npm install && npm run build"
   },
   "engines": {
     "node": "14.17.0",
