@@ -4,14 +4,26 @@ import "./App.css";
 import Createpost from "./Createpost";
 import axios from "axios";
 import SendEmail from "./SendEmail";
-// import { useDispatch } from "react-redux";
-// import editUsers from '../src/Redux/Actions/Action'
+import { useSnackbar } from "notistack";
+import MuiAlert from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
 
+
+
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 export const edited_values = createContext();
 function App() {
+ 
+
+
   const [alldata, setalldata] = useState([]);
   const [passvalue, setpassvalue] = useState(false);
-
+  const [ failureMessage , setFailureMessage] = useState(false)
+  const [ successMessage , setSuccessMessage] = useState(false)
+  const[loader , setLoader] = useState(false)
   const [edit, setedit] = useState({
     name: "",
     email: "",
@@ -21,20 +33,33 @@ function App() {
   });
 
   const submitdata = (input) => {
-    return fetch("http://localhost:4000/user", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      mode: "cors",
-      body: JSON.stringify({
-        name: input.name,
-        email: input.email,
-        phoneno: input.phoneno,
-        position: input.position,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log("error occured", err));
+    if(input.name && input.email && input.phoneno  && input.position) {
+      setLoader(true)
+      return fetch("http://localhost:4000/user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        mode: "cors",
+        body: JSON.stringify({
+          name: input.name,
+          email: input.email,
+          phoneno: input.phoneno,
+          position: input.position,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {   setSuccessMessage(true)
+          setLoader(false)
+      })
+        .catch((err) => {console.log("error occured", err)
+        setLoader(false)
+
+      });
+    }
+    else{
+      console.log('sd');
+      setFailureMessage(true)
+    }
+  
   };
 
   useEffect(() => {
@@ -75,7 +100,24 @@ function App() {
           >
             Add-User
           </button>
-
+          <Snackbar open={successMessage} autoHideDuration={4000} onClose={() =>{
+            setSuccessMessage(false)
+          }} >
+        <Alert severity="success" onClose={() =>{
+            setSuccessMessage(false)
+          }}  >
+          Successfully added 
+        </Alert>
+      </Snackbar>
+      <Snackbar open={failureMessage} autoHideDuration={4000}  onClose={() =>{
+            setFailureMessage(false)
+          }} >
+        <Alert severity="error" onClose={() =>{
+            setFailureMessage(false)
+          }} >
+          Please fill all the fields
+        </Alert>
+      </Snackbar>
           {/* <!-- Modal --> */}
           <div
             className="modal fade"
@@ -102,7 +144,7 @@ function App() {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <Createpost passData={(data) => submitdata(data)} />
+                  <Createpost loader={loader} passData={(data) => submitdata(data)} />
                 </div>
                 <div className="modal-footer">
                   <button

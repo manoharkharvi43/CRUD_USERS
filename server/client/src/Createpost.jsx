@@ -1,3 +1,4 @@
+import { CircularProgress } from "@material-ui/core";
 import React, { useState } from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
@@ -5,7 +6,7 @@ import { edited_values } from "./App";
 
 function Createpost(props) {
 	const edit = useContext(edited_values);
-	const { passData, editData } = props;
+	const { passData, editData , loader } = props;
 	const [input, setinput] = useState({
 		name: "",
 		email: "",
@@ -13,12 +14,7 @@ function Createpost(props) {
 		position: "",
 		editedValue:false
   });
-//   const [editedData, seteditedData] = useState({
-// 		name: "",
-// 		email: "",
-// 		phoneno: "",
-// 		position: "",
-//   });
+
   
 	useEffect(() => {
 		if(edit)
@@ -80,10 +76,14 @@ function Createpost(props) {
 									placeholder="Phone-No"
 									autoComplete="off"
 									name="phoneno"
-									onChange={(e) =>
-										setinput({ ...input, phoneno: e.target.value })
+									onChange={(e) =>{
+									const reg= /^[0-9]+$/
+									if(reg.test(e.target.value)|| e.target.value.length ===0 )
+										setinput({ ...input, phoneno: e.target.value })}
 									}
 									value={input.phoneno}
+									maxLength={10}
+									
 								/>
 							</div>
 							<div className="form-group">
@@ -105,10 +105,11 @@ function Createpost(props) {
 							<button
 								type="button"
 								className="btn btn-primary"
-								style={{ marginTop: "1%" }}
+								style={{ marginTop: "1%" ,minWidth:80 }}
 								type="submit"
+								disabled={loader ? true : false}
 							>
-								submit
+							{loader ?  <CircularProgress size={20} /> :	'submit'}
 							</button>
 						</form>
 					</div>
