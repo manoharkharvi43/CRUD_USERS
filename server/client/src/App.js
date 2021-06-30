@@ -65,13 +65,13 @@ function App() {
   };
 
   const refreshData = () =>{
-    fetch("http://localhost:4000/user")
+    fetch(`(${process.env.LOCALHOST} || http://localhost:4000)/user`)
     .then((res) => res.json())
     .then((data) => setalldata(data))
     .catch((errr) => console.log(errr));
   }
   useEffect(() => {
-    fetch("http://localhost:4000/user")
+    fetch(`(${process.env.LOCALHOST} || http://localhost:4000)/user`)
       .then((res) => res.json())
       .then((data) => setalldata(data))
       .catch((errr) => console.log(errr));
@@ -80,7 +80,7 @@ function App() {
   function deleteitem(id) {
     setDeleteLoader(true)
     axios
-      .delete(`http://localhost:4000/user/${id}`)
+      .delete(`(${process.env.LOCALHOST} || http://localhost:4000)/user/${id}`)
       .then((res) => {console.log(res)
         setDeleteLoader(false) 
         refreshData()})
