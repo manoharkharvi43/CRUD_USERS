@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Createpost from "./Createpost";
-import transporter from "../src/Mailconfig";
+import transporter from "./Mailconfig";
 import { FiLoader } from "react-icons/fi";
 import ModalScreen from "./ModalScreen";
 function SendEmail(props) {
