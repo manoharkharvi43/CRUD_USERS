@@ -34,7 +34,7 @@ function SendEmail(props) {
 	const sendemail = e => {
 		e.preventDefault();
 		if (emailValue)
-			fetch("http://localhost:4000/emailservice", {
+			fetch("/emailservice", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				mode: "cors",

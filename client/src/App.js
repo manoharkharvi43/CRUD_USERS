@@ -36,7 +36,7 @@ function App() {
   const submitdata = (input) => {
     if(input.name && input.email && input.phoneno  && input.position) {
       setLoader(true)
-      return fetch("http://localhost:4000/user", {
+      return fetch("/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         mode: "cors",
@@ -65,13 +65,13 @@ function App() {
   };
 
   const refreshData = () =>{
-    fetch(`(${process.env.LOCALHOST} || http://localhost:4000)/user`)
+    fetch(`/user`)
     .then((res) => res.json())
     .then((data) => setalldata(data))
     .catch((errr) => console.log(errr));
   }
   useEffect(() => {
-    fetch(`(${process.env.LOCALHOST} || http://localhost:4000)/user`)
+    fetch(`/user`)
       .then((res) => res.json())
       .then((data) => setalldata(data))
       .catch((errr) => console.log(errr));
@@ -80,7 +80,7 @@ function App() {
   function deleteitem(id) {
     setDeleteLoader(true)
     axios
-      .delete(`(${process.env.LOCALHOST} || http://localhost:4000)/user/${id}`)
+      .delete(`/user/${id}`)
       .then((res) => {console.log(res)
         setDeleteLoader(false) 
         refreshData()})
